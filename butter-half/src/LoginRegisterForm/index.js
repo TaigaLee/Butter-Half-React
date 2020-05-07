@@ -44,7 +44,11 @@ export default function LoginRegisterForm() {
     >
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography
+          component="h1"
+          variant="h5"
+          style={{ fontFamily: "Advent Pro" }}
+        >
           Sign up
         </Typography>
         <form className={classes.form} noValidate>
@@ -100,7 +104,10 @@ export default function LoginRegisterForm() {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            style={{
+              fontFamily: "Advent Pro",
+              backgroundColor: "gold"
+            }}
             className={classes.submit}
           >
             Sign Up
