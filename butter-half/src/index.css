@@ -1,0 +1,18 @@
+body {
+  background-color: #ff914d;
+}
+
+.Logo {
+  width: 26rem;
+}
+
+h1 {
+  color: white;
+  font-size: 3.5rem;
+  font-family: "Righteous";
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
