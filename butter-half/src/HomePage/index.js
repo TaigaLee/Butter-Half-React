@@ -44,8 +44,15 @@ export default class HomePage extends React.Component {
   render() {
     return (
       <div>
-        <img className="Logo" src="https://i.imgur.com/kDW7dcm.png" />
-        <h1> Find Someone To Taco-Bout It With 🌮 </h1>
+        <img
+          className="Logo"
+          src="https://i.imgur.com/kDW7dcm.png"
+          alt="logo"
+        />
+        <h1 style={{ fontFamily: "Advent Pro", fontSize: "3.6rem" }}>
+          {" "}
+          Find Someone To Taco-Bout It With 🌮{" "}
+        </h1>
         {this.state.action === "Login" ? (
           <LoginForm
             switchForm={this.switchForm}

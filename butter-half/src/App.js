@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import HomePage from "./HomePage";
+import SetUpForm from "./SetUpForm";
 
 export default class App extends React.Component {
   constructor() {
@@ -9,6 +10,7 @@ export default class App extends React.Component {
     this.state = {
       loggedIn: false,
       loggedInUser: "",
+      needsToBeSetUp: false,
     };
   }
   register = async (registerInfo) => {
@@ -26,13 +28,11 @@ export default class App extends React.Component {
 
       const registerResponseJson = await registerResponse.json();
 
-      console.log(registerResponseJson);
-
-      console.log("REGISTER FUNCTION");
       if (registerResponse.status === 201) {
         this.setState({
           loggedIn: true,
           loggedInUser: registerResponseJson.data,
+          needsToBeSetUp: true,
         });
       }
     } catch (err) {
@@ -55,16 +55,23 @@ export default class App extends React.Component {
 
       const loginResponseJson = await loginResponse.json();
 
-      console.log(loginResponseJson);
-
       if (loginResponse.status === 200) {
         this.setState({
           loggedIn: true,
           loggedInUser: loginResponseJson.data,
+          needsToBeSetUp: false,
         });
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  switchNeedsToBeSetUp = () => {
+    if (this.state.needsToBeSetUp === true) {
+      this.setState({
+        needsToBeSetUp: false,
+      });
     }
   };
 
@@ -86,17 +93,50 @@ export default class App extends React.Component {
     }
   };
 
+  updateUser = async (updatedUserInfo) => {
+    const url = process.env.REACT_APP_API_URL + "/user/edit";
+
+    try {
+      const updateUserResponse = await fetch(url, {
+        credentials: "include",
+        method: "PUT",
+        body: JSON.stringify(updatedUserInfo),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const updatedUserJson = await updateUserResponse.json();
+
+      if (updatedUserJson.status === 200) {
+        this.setState({
+          loggedInUser: updatedUserJson.data,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   render() {
     return (
       <div
         className="App"
         style={{ backgroundColor: "#ff914d", height: "100vh" }}
       >
-        <HomePage
-          register={this.register}
-          login={this.login}
-          logout={this.logout}
-        />
+        {this.state.needsToBeSetUp ? (
+          <SetUpForm
+            updateUser={this.updateUser}
+            loggedInUser={this.state.loggedInUser}
+            switchNeedsToBeSetUp={this.switchNeedsToBeSetUp}
+          />
+        ) : (
+          <HomePage
+            register={this.register}
+            login={this.login}
+            logout={this.logout}
+          />
+        )}
       </div>
     );
   }
