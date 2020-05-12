@@ -13,29 +13,28 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
-export default function LoginRegisterForm() {
+export default function LoginRegisterForm(props) {
   const classes = useStyles();
-
   return (
     <Container
       component="main"
@@ -46,34 +45,25 @@ export default function LoginRegisterForm() {
       <div className={classes.paper}>
         <Typography
           component="h1"
-          variant="h5"
+          variant="h4"
           style={{ fontFamily: "Advent Pro" }}
         >
           Sign up
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
-                name="firstName"
+                autoComplete="name"
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="Name"
+                value={props.name}
+                onChange={props.handleChange}
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
               />
             </Grid>
             <Grid item xs={12}>
@@ -83,6 +73,8 @@ export default function LoginRegisterForm() {
                 fullWidth
                 id="email"
                 label="Email Address"
+                value={props.email}
+                onChange={props.handleChange}
                 name="email"
                 autoComplete="email"
               />
@@ -95,8 +87,36 @@ export default function LoginRegisterForm() {
                 name="password"
                 label="Password"
                 type="password"
+                value={props.password}
+                onChange={props.handleChange}
                 id="password"
                 autoComplete="current-password"
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="zipcode"
+                label="Zipcode"
+                name="location"
+                autoComplete="zipcode"
+                value={props.location}
+                onChange={props.handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="age"
+                label="Age"
+                value={props.age}
+                onChange={props.handleChange}
+                name="age"
+                autoComplete="age"
               />
             </Grid>
           </Grid>
@@ -106,17 +126,18 @@ export default function LoginRegisterForm() {
             variant="contained"
             style={{
               fontFamily: "Advent Pro",
-              backgroundColor: "gold"
+              backgroundColor: "gold",
             }}
             className={classes.submit}
+            onClick={props.handleSubmit}
           >
             Sign Up
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <span className="fake-link" onClick={props.switchForm}>
                 Already have an account? Sign in
-              </Link>
+              </span>
             </Grid>
           </Grid>
         </form>
