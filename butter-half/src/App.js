@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import HomePage from "./HomePage";
 import SetUpForm from "./SetUpForm";
+import Dashboard from "./Dashboard";
 
 export default class App extends React.Component {
   constructor() {
@@ -130,6 +131,8 @@ export default class App extends React.Component {
             loggedInUser={this.state.loggedInUser}
             switchNeedsToBeSetUp={this.switchNeedsToBeSetUp}
           />
+        ) : this.state.loggedIn ? (
+          <Dashboard />
         ) : (
           <HomePage
             register={this.register}
