@@ -121,6 +121,30 @@ export default class App extends React.Component {
     }
   };
 
+  deleteUser = async () => {
+    try {
+      const url = process.env.REACT_APP_API_URL + "/user/";
+
+      const deleteUserResponse = await fetch(url, {
+        credentials: "include",
+        method: "DELETE",
+      });
+
+      const deletedUserJson = await deleteUserResponse.json();
+
+      console.log(deletedUserJson);
+
+      if (deletedUserJson.status === 200) {
+        this.setState({
+          loggedInUser: "",
+          loggedIn: false,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   render() {
     return (
       <div
@@ -134,7 +158,10 @@ export default class App extends React.Component {
             switchNeedsToBeSetUp={this.switchNeedsToBeSetUp}
           />
         ) : this.state.loggedIn ? (
-          <Dashboard loggedInUser={this.state.loggedInUser} />
+          <Dashboard
+            loggedInUser={this.state.loggedInUser}
+            deleteUser={this.deleteUser}
+          />
         ) : (
           <HomePage
             register={this.register}

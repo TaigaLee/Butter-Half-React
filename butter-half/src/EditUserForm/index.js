@@ -50,6 +50,10 @@ export default class SetUpForm extends React.Component {
     this.props.changeEditingUser();
   };
 
+  handleDelete = (event) => {
+    this.props.deleteUser();
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -137,12 +141,34 @@ export default class SetUpForm extends React.Component {
               onChange={this.handleChange}
             />
           </Form.Field>
-          <Form.Button
-            style={{ marginTop: "20px" }}
-            onClick={this.handleSubmit}
-          >
-            Edit
-          </Form.Button>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Form.Button
+              size="huge"
+              color="yellow"
+              style={{
+                marginTop: "20px",
+                fontFamily: "Advent Pro",
+                color: "black",
+                marginRight: "50px",
+              }}
+              onClick={this.handleSubmit}
+            >
+              Submit
+            </Form.Button>
+            <Form.Button
+              size="huge"
+              color="red"
+              style={{
+                marginTop: "20px",
+                fontFamily: "Advent Pro",
+                color: "black",
+                marginLeft: "50px",
+              }}
+              onClick={this.handleDelete}
+            >
+              Delete
+            </Form.Button>
+          </div>
         </Form>
         <footer>Made with love by Taiga Lee 💕</footer>
       </React.Fragment>

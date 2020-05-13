@@ -56,8 +56,6 @@ class Dashboard extends React.Component {
 
       const userResponseJson = await userResponse.json();
 
-      console.log(userResponseJson);
-
       this.setState({
         userToEdit: userResponseJson.data,
       });
@@ -120,6 +118,10 @@ class Dashboard extends React.Component {
     }
   };
 
+  deleteUser = () => {
+    this.props.deleteUser();
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -133,6 +135,7 @@ class Dashboard extends React.Component {
             userToEdit={this.state.userToEdit}
             updateUser={this.updateUser}
             changeEditingUser={this.changeEditingUser}
+            deleteUser={this.deleteUser}
           />
         ) : (
           <React.Fragment>
