@@ -109,6 +109,8 @@ export default class App extends React.Component {
 
       const updatedUserJson = await updateUserResponse.json();
 
+      console.log(updatedUserJson);
+
       if (updatedUserJson.status === 200) {
         this.setState({
           loggedInUser: updatedUserJson.data,
@@ -132,7 +134,7 @@ export default class App extends React.Component {
             switchNeedsToBeSetUp={this.switchNeedsToBeSetUp}
           />
         ) : this.state.loggedIn ? (
-          <Dashboard />
+          <Dashboard loggedInUser={this.state.loggedInUser} />
         ) : (
           <HomePage
             register={this.register}

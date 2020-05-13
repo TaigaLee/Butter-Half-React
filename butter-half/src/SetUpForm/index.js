@@ -81,12 +81,14 @@ export default class FormExampleFieldControl extends React.Component {
               label="Name"
               name="name"
               value={this.state.name}
+              onChange={this.handleChange}
             />
             <Form.Input
               fluid
               label="Zipcode"
               name="location"
               value={this.state.location}
+              onChange={this.handleChange}
             />
           </Form.Group>
           <Form.TextArea
@@ -94,6 +96,7 @@ export default class FormExampleFieldControl extends React.Component {
             name="bio"
             placeholder="Tell us more about yourself..."
             style={{ height: "200px" }}
+            onChange={this.handleChange}
           />
           <Form.Button
             style={{ marginTop: "20px" }}
