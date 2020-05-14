@@ -1,10 +1,11 @@
 import React from "react";
-import { Button, Grid, Header, Message } from "semantic-ui-react";
+import { Button, Grid, Header, Message, Divider } from "semantic-ui-react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import RequestsDashboard from "../RequestsDashboard";
 import EditUserForm from "../EditUserForm";
 import "../index.css";
 import RequestsList from "../RequestsList";
+import RequestShowPage from "../RequestShowPage";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Dashboard extends React.Component {
       editingUser: false,
       userToEdit: null,
       loggedInUser: this.props.loggedInUser,
+      requestToView: null,
     };
   }
 
@@ -89,6 +91,25 @@ class Dashboard extends React.Component {
     }
   };
 
+  getRequestToView = async (idOfRequestToView) => {
+    try {
+      const url =
+        process.env.REACT_APP_API_URL + "/request/" + idOfRequestToView;
+
+      const requestResponse = await fetch(url, {
+        credentials: "include",
+      });
+
+      const requestResponseJson = await requestResponse.json();
+
+      this.setState({
+        requestToView: requestResponseJson.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   updateUser = async (updatedUserInfo) => {
     try {
       const url = process.env.REACT_APP_API_URL + "/user/edit/";
@@ -145,6 +166,12 @@ class Dashboard extends React.Component {
 
   deleteUser = () => {
     this.props.deleteUser();
+  };
+
+  backToDashboard = () => {
+    this.setState({
+      requestToView: null,
+    });
   };
 
   render() {
@@ -223,23 +250,47 @@ class Dashboard extends React.Component {
                 </Grid.Column>
               </Grid.Row>
             </Grid>
-            <h1
-              style={{
-                color: "white",
-                fontFamily: "Advent Pro",
-                fontSize: "2.5rem",
-              }}
-            >
-              Requests Near You
-            </h1>
-            {this.state.requests ? (
-              <RequestsList requests={this.state.requests} />
+            <Divider
+              style={{ width: "59%", marginLeft: "auto", marginRight: "auto" }}
+            />
+            {this.state.requestToView !== null ? (
+              <RequestShowPage
+                requestToView={this.state.requestToView}
+                backToDashboard={this.backToDashboard}
+              />
+            ) : this.state.requests ? (
+              <div>
+                <h1
+                  style={{
+                    color: "white",
+                    fontFamily: "Advent Pro",
+                    fontSize: "2.5rem",
+                  }}
+                >
+                  Requests Near You
+                </h1>
+                <RequestsList
+                  requests={this.state.requests}
+                  getRequestToView={this.getRequestToView}
+                  loggedInUser={this.state.loggedInUser}
+                />
+              </div>
             ) : (
-              <h2> Nothing here </h2>
+              <div>
+                <h1
+                  style={{
+                    color: "white",
+                    fontFamily: "Advent Pro",
+                    fontSize: "2.5rem",
+                  }}
+                >
+                  Requests Near You
+                </h1>
+                <h2> Nothing here </h2>
+              </div>
             )}
           </React.Fragment>
         )}
-        <footer>Made with love by Taiga Lee 💕</footer>
       </div>
     );
   }

@@ -3,7 +3,6 @@ import { Card, Button, Image } from "semantic-ui-react";
 
 export default function RequestsList(props) {
   const propsRequests = props.requests;
-  console.log(props.requests);
   const requests = propsRequests.map((request) => {
     return (
       <Card
@@ -33,14 +32,24 @@ export default function RequestsList(props) {
           )}
 
           <Button
+            color="yellow"
             style={{
               marginTop: "10px",
               backgroundColor: "gold",
               color: "white",
             }}
+            onClick={() => props.getRequestToView(request._id)}
           >
             View{" "}
           </Button>
+
+          {request.user.email === props.loggedInUser.email && (
+            <div style={{ marginTop: "10px" }}>
+              <h4> Admin Controls </h4>
+              <Button> Edit </Button>
+              <Button> Delete </Button>
+            </div>
+          )}
         </Card.Content>
       </Card>
     );
