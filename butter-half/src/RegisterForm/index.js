@@ -55,7 +55,6 @@ export default function LoginRegisterForm(props) {
                 fullWidth
                 id="name"
                 label="Name"
-                value={props.name}
                 onChange={props.handleChange}
                 autoFocus
               />
@@ -67,7 +66,6 @@ export default function LoginRegisterForm(props) {
                 fullWidth
                 id="email"
                 label="Email Address"
-                value={props.email}
                 onChange={props.handleChange}
                 name="email"
                 autoComplete="email"
@@ -81,7 +79,6 @@ export default function LoginRegisterForm(props) {
                 name="password"
                 label="Password"
                 type="password"
-                value={props.password}
                 onChange={props.handleChange}
                 id="password"
                 autoComplete="current-password"
@@ -92,11 +89,10 @@ export default function LoginRegisterForm(props) {
                 variant="outlined"
                 required
                 fullWidth
-                id="zipcode"
-                label="Zipcode"
+                id="city"
+                label="City"
                 name="location"
-                autoComplete="zipcode"
-                value={props.location}
+                autoComplete="city"
                 onChange={props.handleChange}
               />
             </Grid>
@@ -107,7 +103,6 @@ export default function LoginRegisterForm(props) {
                 fullWidth
                 id="age"
                 label="Age"
-                value={props.age}
                 onChange={props.handleChange}
                 name="age"
                 autoComplete="age"

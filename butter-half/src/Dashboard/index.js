@@ -1,15 +1,17 @@
 import React from "react";
 import { Button, Grid, Header, Message } from "semantic-ui-react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import NewRequestForm from "../NewRequestForm";
+import RequestsDashboard from "../RequestsDashboard";
 import EditUserForm from "../EditUserForm";
+import "../index.css";
+import RequestsList from "../RequestsList";
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      requests: [],
+      requests: null,
       addingRequest: false,
       editingUser: false,
       userToEdit: null,
@@ -18,6 +20,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
+    this.getRequests();
     this.findUserToEdit();
   }
 
@@ -40,7 +43,29 @@ class Dashboard extends React.Component {
         this.setState({
           requests: [...this.state.requests, createdRequestJson.data],
         });
+
+        console.log(this.state.requests);
       }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  getRequests = async () => {
+    try {
+      const url = process.env.REACT_APP_API_URL + "/request/";
+
+      const requestsResponse = await fetch(url, {
+        credentials: "include",
+      });
+
+      const requestsResponseJson = await requestsResponse.json();
+
+      this.setState({
+        requests: requestsResponseJson.data,
+      });
+
+      console.log(requestsResponseJson);
     } catch (err) {
       console.error(err);
     }
@@ -101,7 +126,6 @@ class Dashboard extends React.Component {
     } else {
       this.setState({
         addingRequest: false,
-        userToEdit: null,
       });
     }
   };
@@ -114,6 +138,7 @@ class Dashboard extends React.Component {
     } else {
       this.setState({
         editingUser: false,
+        userToEdit: null,
       });
     }
   };
@@ -124,11 +149,12 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div>
         {this.state.addingRequest ? (
-          <NewRequestForm
+          <RequestsDashboard
             changeAddingRequest={this.changeAddingRequest}
             createRequest={this.createRequest}
+            loggedInUser={this.state.loggedInUser}
           />
         ) : this.state.editingUser ? (
           <EditUserForm
@@ -144,7 +170,7 @@ class Dashboard extends React.Component {
               src="https://i.imgur.com/kDW7dcm.png"
               alt="logo"
             />{" "}
-            <Grid container style={{ padding: "5em 0em" }}>
+            <Grid container>
               <Grid.Row>
                 <Grid.Column>
                   <Header
@@ -163,7 +189,7 @@ class Dashboard extends React.Component {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      flexDirection: "row-reverse",
+                      justifyContent: "center",
                     }}
                   >
                     <AccountCircleIcon
@@ -181,26 +207,40 @@ class Dashboard extends React.Component {
                         color: "white",
                         backgroundColor: "gold",
                         zIndex: "10",
-                        marginRight: "20px",
+                        marginLeft: "60px",
                       }}
                     >
                       Create Request{" "}
                     </Button>
+                    <Button
+                      color="red"
+                      style={{ marginLeft: "60px", zIndex: "11" }}
+                      onClick={this.props.logout}
+                    >
+                      Logout
+                    </Button>
                   </div>
                 </Grid.Column>
               </Grid.Row>
-
-              <Grid.Row>
-                <Grid.Column>
-                  <Message>
-                    <Header as="h1">This is where requests will go</Header>
-                  </Message>
-                </Grid.Column>
-              </Grid.Row>
             </Grid>
+            <h1
+              style={{
+                color: "white",
+                fontFamily: "Advent Pro",
+                fontSize: "2.5rem",
+              }}
+            >
+              Requests Near You
+            </h1>
+            {this.state.requests ? (
+              <RequestsList requests={this.state.requests} />
+            ) : (
+              <h2> Nothing here </h2>
+            )}
           </React.Fragment>
         )}
-      </React.Fragment>
+        <footer>Made with love by Taiga Lee 💕</footer>
+      </div>
     );
   }
 }

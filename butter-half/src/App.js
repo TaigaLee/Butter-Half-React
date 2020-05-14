@@ -78,13 +78,16 @@ export default class App extends React.Component {
 
   logout = async () => {
     try {
+      console.log("clicked");
       const url = process.env.REACT_APP_API_URL + "/auth/logout";
 
       const logoutResponse = await fetch(url, {
         credentials: "include",
       });
 
-      if (logoutResponse.status === 200) {
+      const logoutResponseJson = await logoutResponse.json();
+
+      if (logoutResponseJson.status === 200) {
         this.setState({
           loggedIn: false,
         });
@@ -161,6 +164,7 @@ export default class App extends React.Component {
           <Dashboard
             loggedInUser={this.state.loggedInUser}
             deleteUser={this.deleteUser}
+            logout={this.logout}
           />
         ) : (
           <HomePage
