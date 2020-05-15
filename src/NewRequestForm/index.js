@@ -11,6 +11,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 
+import "../index.css";
+
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: "relative",
@@ -183,6 +185,7 @@ export default function NewRequestForm(props) {
           </React.Fragment>
         </Paper>
       </main>
+      <footer>Made with love by Taiga Lee 💕</footer>
     </React.Fragment>
   );
 }

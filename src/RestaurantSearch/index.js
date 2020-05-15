@@ -2,6 +2,8 @@ import React from "react";
 
 import { Button, Form, Header } from "semantic-ui-react";
 
+import "../index.css";
+
 export default class RestaurantSearch extends React.Component {
   render() {
     return (
@@ -116,6 +118,7 @@ export default class RestaurantSearch extends React.Component {
             </div>
           </div>
         )}
+        <footer>Made with love by Taiga Lee 💕</footer>
       </React.Fragment>
     );
   }

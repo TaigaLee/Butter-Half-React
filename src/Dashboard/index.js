@@ -410,6 +410,7 @@ class Dashboard extends React.Component {
                 <h2> Nothing here </h2>
               </div>
             )}
+            <footer>Made with love by Taiga Lee 💕</footer>
           </React.Fragment>
         )}
       </div>
