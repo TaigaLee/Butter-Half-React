@@ -1,20 +1,8 @@
 import React from "react";
-import RequestsDashboard from "../RequestsDashboard";
 
-import {
-  Button,
-  Form,
-  Grid,
-  Message,
-  Segment,
-  Header,
-} from "semantic-ui-react";
+import { Button, Form, Header } from "semantic-ui-react";
 
 export default class RestaurantSearch extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <React.Fragment>

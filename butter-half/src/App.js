@@ -3,6 +3,7 @@ import "./App.css";
 import HomePage from "./HomePage";
 import SetUpForm from "./SetUpForm";
 import Dashboard from "./Dashboard";
+import CometChatUnified from "./CometChat/src/lib/CometChat/components/CometChatUnified";
 
 export default class App extends React.Component {
   constructor() {
@@ -173,6 +174,7 @@ export default class App extends React.Component {
             logout={this.logout}
           />
         )}
+        <CometChatUnified />
       </div>
     );
   }

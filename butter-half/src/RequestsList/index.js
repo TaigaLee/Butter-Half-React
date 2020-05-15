@@ -2,8 +2,7 @@ import React from "react";
 import { Card, Button, Image } from "semantic-ui-react";
 
 export default function RequestsList(props) {
-  const propsRequests = props.requests;
-  const requests = propsRequests.map((request) => {
+  const requests = props.requests.map((request) => {
     return (
       <Card
         key={request.id}
@@ -46,8 +45,10 @@ export default function RequestsList(props) {
           {request.user.email === props.loggedInUser.email && (
             <div style={{ marginTop: "10px" }}>
               <h4> Admin Controls </h4>
-              <Button> Edit </Button>
-              <Button> Delete </Button>
+              <Button onClick={() => props.deleteRequest(request._id)}>
+                {" "}
+                Delete{" "}
+              </Button>
             </div>
           )}
         </Card.Content>

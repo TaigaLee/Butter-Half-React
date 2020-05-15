@@ -2,20 +2,60 @@ import React, { Component } from "react";
 
 import "semantic-ui-css/semantic.min.css";
 
+import RequestEditModal from "../RequestEditModal";
+
 import {
   Button,
   Container,
   Divider,
   Grid,
   Header,
-  Menu,
   Message,
 } from "semantic-ui-react";
 
 export default class RequestShowPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      loggedInUser: "",
+      editingRequest: false,
+      requestToView: this.props.requestToView,
+    };
   }
+
+  componentDidMount() {
+    this.getLoggedInUser();
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.requestToView !== state.requestToView) {
+      return {
+        requestToView: props.requestToView,
+      };
+    }
+    return null;
+  }
+
+  switchEditingRequest = () => {
+    if (this.state.editingRequest === false) {
+      this.setState({
+        editingRequest: true,
+      });
+    } else {
+      this.setState({
+        editingRequest: false,
+      });
+    }
+  };
+
+  getLoggedInUser = () => {
+    const loggedInUser = this.props.loggedInUser;
+
+    this.setState({
+      loggedInUser: loggedInUser,
+    });
+  };
 
   render() {
     return (
@@ -49,10 +89,13 @@ export default class RequestShowPage extends Component {
                       marginTop: "10px",
                     }}
                   >
-                    {this.props.requestToView.restaurantName} <br />
-                    Address: {this.props.requestToView.restaurantAddress} (
-                    {this.props.requestToView.restaurantCity}) <br /> <br />
-                    Type of request: {this.props.requestToView.typeOfDate}
+                    {this.state.requestToView.restaurantName} <br />
+                    Address: {this.state.requestToView.restaurantAddress} (
+                    {this.state.requestToView.restaurantCity}) <br /> <br />
+                    Type of request: {this.state.requestToView.typeOfDate}{" "}
+                    <br />
+                    <br />
+                    Extra info: {this.state.requestToView.extraInfo}
                   </div>
                 </div>
               </Grid>
@@ -105,20 +148,40 @@ export default class RequestShowPage extends Component {
                 <p>{this.props.requestToView.user.bio}</p>
               </div>
               <Button.Group>
-                <Button
-                  color="yellow"
-                  style={{ marginTop: "50px", marginRight: "20px" }}
-                >
-                  {" "}
-                  Message{" "}
-                </Button>
+                {this.props.requestToView.user.email ===
+                this.state.loggedInUser.email ? (
+                  <Button
+                    color="green"
+                    style={{ marginTop: "50px", marginLeft: "20px" }}
+                    onClick={this.switchEditingRequest}
+                  >
+                    Edit
+                  </Button>
+                ) : (
+                  <Button
+                    color="yellow"
+                    style={{ marginTop: "50px", marginRight: "20px" }}
+                  >
+                    {" "}
+                    Message{" "}
+                  </Button>
+                )}
                 <Button
                   color="red"
                   style={{ marginTop: "50px", marginLeft: "20px" }}
                   onClick={this.props.backToDashboard}
                 >
-                  Back to dashboard{" "}
+                  Back
                 </Button>
+
+                {this.state.editingRequest && (
+                  <RequestEditModal
+                    requestToEdit={this.state.requestToView}
+                    switchEditingRequest={this.switchEditingRequest}
+                    updateRequest={this.props.updateRequest}
+                    getRequestToView={this.props.getRequestToView}
+                  />
+                )}
               </Button.Group>
             </Grid.Column>
           </Grid>

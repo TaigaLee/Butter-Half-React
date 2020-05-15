@@ -1,17 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
 import Paper from "@material-ui/core/Paper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControl from "@material-ui/core/FormControl";
@@ -74,7 +68,7 @@ export default function NewRequestForm(props) {
                     required
                     label="Restaurant name"
                     name="restaurantName"
-                    value={props.restaurantName}
+                    defaultValue={props.restaurantName}
                     fullWidth
                     onChange={props.handleChange}
                   />
@@ -84,7 +78,7 @@ export default function NewRequestForm(props) {
                     required
                     name="resturantAddress"
                     label="Restaurant address"
-                    value={props.restaurantAddress}
+                    defaultValue={props.restaurantAddress}
                     fullWidth
                     onChange={props.handleChange}
                   />
@@ -92,7 +86,7 @@ export default function NewRequestForm(props) {
                     required
                     name="resturantCity"
                     label="Restaurant city"
-                    value={props.restaurantCity}
+                    defaultValue={props.restaurantCity}
                     fullWidth
                     style={{ marginTop: "20px" }}
                     onChange={props.handleChange}

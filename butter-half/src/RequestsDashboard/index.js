@@ -16,7 +16,6 @@ export default class RequestsDashboard extends React.Component {
       accepted: false,
       restaurantSearchComplete: false,
       typeOfDate: "",
-      user: props.loggedInUser,
     };
   }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid, Header, Message, Divider } from "semantic-ui-react";
+import { Button, Grid, Header } from "semantic-ui-react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import RequestsDashboard from "../RequestsDashboard";
 import EditUserForm from "../EditUserForm";
@@ -18,6 +18,8 @@ class Dashboard extends React.Component {
       userToEdit: null,
       loggedInUser: this.props.loggedInUser,
       requestToView: null,
+      editingRequest: false,
+      requestToEdit: "",
     };
   }
 
@@ -25,6 +27,18 @@ class Dashboard extends React.Component {
     this.getRequests();
     this.findUserToEdit();
   }
+
+  switchEditingRequest = () => {
+    if (this.state.editingRequest === false) {
+      this.setState({
+        editingRequest: true,
+      });
+    } else if (this.state.editingRequest === true) {
+      this.setState({
+        editingRequest: false,
+      });
+    }
+  };
 
   createRequest = async (requestToAdd) => {
     try {
@@ -44,9 +58,8 @@ class Dashboard extends React.Component {
       if (createdRequestJson.status === 201) {
         this.setState({
           requests: [...this.state.requests, createdRequestJson.data],
+          addingRequest: false,
         });
-
-        console.log(this.state.requests);
       }
     } catch (err) {
       console.error(err);
@@ -66,8 +79,6 @@ class Dashboard extends React.Component {
       this.setState({
         requests: requestsResponseJson.data,
       });
-
-      console.log(requestsResponseJson);
     } catch (err) {
       console.error(err);
     }
@@ -110,6 +121,14 @@ class Dashboard extends React.Component {
     }
   };
 
+  setRequestToViewAsNull = () => {
+    if (this.state.requestToView !== null) {
+      this.setState({
+        requestToView: null,
+      });
+    }
+  };
+
   updateUser = async (updatedUserInfo) => {
     try {
       const url = process.env.REACT_APP_API_URL + "/user/edit/";
@@ -125,8 +144,6 @@ class Dashboard extends React.Component {
 
       const updatedUserJson = await updatedUserResponse.json();
 
-      console.log(updatedUserJson);
-
       if (updatedUserJson.status === 200) {
         this.setState({
           loggedInUser: updatedUserJson.data,
@@ -138,12 +155,69 @@ class Dashboard extends React.Component {
     }
   };
 
+  deleteRequest = async (idOfRequestToDelete) => {
+    try {
+      const url =
+        process.env.REACT_APP_API_URL + "/request/" + idOfRequestToDelete;
+
+      const deleteRequestResponse = await fetch(url, {
+        credentials: "include",
+        method: "DELETE",
+      });
+
+      const deleteRequestJson = await deleteRequestResponse.json();
+      if (deleteRequestJson.status === 200) {
+        this.setState({
+          requests: this.state.requests.filter(
+            (request) => request._id !== idOfRequestToDelete
+          ),
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  updateRequest = async (newRequestInfo) => {
+    try {
+      const url =
+        process.env.REACT_APP_API_URL +
+        "/request/" +
+        this.state.requestToView._id;
+
+      const updateRequestResponse = await fetch(url, {
+        credentials: "include",
+        method: "PUT",
+        body: JSON.stringify(newRequestInfo),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const updateRequestJson = await updateRequestResponse.json();
+      console.log(updateRequestJson);
+
+      if (updateRequestJson.status === 200) {
+        const requests = this.state.requests;
+
+        const indexOfRequestUpdated = requests.findIndex(
+          (request) => request._id === this.state.requestToView._id
+        );
+
+        requests[indexOfRequestUpdated] = updateRequestJson.data;
+
+        this.setRequestToViewAsNull();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   changeAddingRequest = () => {
     if (this.state.addingRequest === false) {
       this.setState({
         addingRequest: true,
       });
-      console.log("clicked");
     } else {
       this.setState({
         addingRequest: false,
@@ -250,13 +324,12 @@ class Dashboard extends React.Component {
                 </Grid.Column>
               </Grid.Row>
             </Grid>
-            <Divider
-              style={{ width: "59%", marginLeft: "auto", marginRight: "auto" }}
-            />
             {this.state.requestToView !== null ? (
               <RequestShowPage
                 requestToView={this.state.requestToView}
                 backToDashboard={this.backToDashboard}
+                loggedInUser={this.state.loggedInUser}
+                updateRequest={this.updateRequest}
               />
             ) : this.state.requests ? (
               <div>
@@ -273,6 +346,8 @@ class Dashboard extends React.Component {
                   requests={this.state.requests}
                   getRequestToView={this.getRequestToView}
                   loggedInUser={this.state.loggedInUser}
+                  switchEditingRequest={this.switchEditingRequest}
+                  deleteRequest={this.deleteRequest}
                 />
               </div>
             ) : (
