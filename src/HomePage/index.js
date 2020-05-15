@@ -74,7 +74,7 @@ export default class HomePage extends React.Component {
             handleChange={this.handleChange}
           />
         )}
-        <footer>Made with love by Taiga Lee 💕</footer>
+        {/* <footer>Made with love by Taiga Lee 💕</footer> */}
       </div>
     );
   }

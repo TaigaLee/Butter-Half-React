@@ -3,7 +3,8 @@ import "./App.css";
 import HomePage from "./HomePage";
 import SetUpForm from "./SetUpForm";
 import Dashboard from "./Dashboard";
-import CometChatUnified from "./CometChat/src/lib/CometChat/components/CometChatUnified";
+import ChatApp from "./CometChat/src/defaultPages/ChatApp";
+import { CometChat } from "@cometchat-pro/chat";
 
 export default class App extends React.Component {
   constructor() {
@@ -93,6 +94,14 @@ export default class App extends React.Component {
           loggedIn: false,
         });
       }
+      CometChat.logout().then(
+        (success) => {
+          console.log("logout completed successfully");
+        },
+        (error) => {
+          console.log("Logout failed", { error });
+        }
+      );
     } catch (err) {
       console.error(err);
     }
@@ -174,7 +183,6 @@ export default class App extends React.Component {
             logout={this.logout}
           />
         )}
-        <CometChatUnified />
       </div>
     );
   }

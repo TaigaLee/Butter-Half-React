@@ -1,11 +1,13 @@
 import React from "react";
-import { Button, Grid, Header } from "semantic-ui-react";
+import { Button, Grid, Header, Divider } from "semantic-ui-react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import RequestsDashboard from "../RequestsDashboard";
 import EditUserForm from "../EditUserForm";
 import "../index.css";
 import RequestsList from "../RequestsList";
 import RequestShowPage from "../RequestShowPage";
+import { CometChat } from "@cometchat-pro/chat";
+import ChatDashboard from "../ChatDashboard";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -20,13 +22,29 @@ class Dashboard extends React.Component {
       requestToView: null,
       editingRequest: false,
       requestToEdit: "",
+      viewChat: false,
     };
   }
 
   componentDidMount() {
     this.getRequests();
     this.findUserToEdit();
+    this.loginChatUser();
   }
+
+  loginChatUser = () => {
+    const apiKey = "8f2309ad0942c1bb7c03d2e6005b973031289c85";
+    const uid = this.state.loggedInUser._id;
+
+    CometChat.login(uid, apiKey).then(
+      (user) => {
+        console.log("Login Successful:", { user });
+      },
+      (error) => {
+        console.log("Login failed with exception:", { error });
+      }
+    );
+  };
 
   switchEditingRequest = () => {
     if (this.state.editingRequest === false) {
@@ -248,10 +266,28 @@ class Dashboard extends React.Component {
     });
   };
 
+  switchViewingChat = () => {
+    if (this.state.viewingChat === false) {
+      this.setState({
+        viewingChat: true,
+      });
+      console.log(this.state.viewingChat);
+      console.log("Clicked");
+    } else {
+      this.setState({
+        viewingChat: false,
+      });
+    }
+  };
+
   render() {
     return (
       <div>
-        {this.state.addingRequest ? (
+        {this.state.viewingChat ? (
+          <div>
+            <ChatDashboard switchViewingChat={this.switchViewingChat} />
+          </div>
+        ) : this.state.addingRequest ? (
           <RequestsDashboard
             changeAddingRequest={this.changeAddingRequest}
             createRequest={this.createRequest}
@@ -314,6 +350,13 @@ class Dashboard extends React.Component {
                       Create Request{" "}
                     </Button>
                     <Button
+                      color="green"
+                      style={{ marginLeft: "60px", zIndex: "11" }}
+                      onClick={() => this.setState({ viewingChat: true })}
+                    >
+                      Chat
+                    </Button>
+                    <Button
                       color="red"
                       style={{ marginLeft: "60px", zIndex: "11" }}
                       onClick={this.props.logout}
@@ -324,6 +367,9 @@ class Dashboard extends React.Component {
                 </Grid.Column>
               </Grid.Row>
             </Grid>
+            <Divider
+              style={{ width: "58vw", marginLeft: "auto", marginRight: "auto" }}
+            />
             {this.state.requestToView !== null ? (
               <RequestShowPage
                 requestToView={this.state.requestToView}
@@ -340,7 +386,7 @@ class Dashboard extends React.Component {
                     fontSize: "2.5rem",
                   }}
                 >
-                  Requests Near You
+                  Current Requests
                 </h1>
                 <RequestsList
                   requests={this.state.requests}

@@ -17,6 +17,11 @@ export default class RestaurantSearch extends React.Component {
               }}
             >
               First step, find the restaurant!
+              <p style={{ fontSize: "1.5rem", color: "red" }}>
+                {" "}
+                If you're trying to submit an online request, enter any
+                restaurant name and manually enter in the information later.
+              </p>
             </Header>
             <Form>
               <Form.Input

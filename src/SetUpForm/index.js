@@ -2,6 +2,7 @@ import React from "react";
 import { Form } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "../index.css";
+import { CometChat } from "@cometchat-pro/chat";
 
 export default class FormExampleFieldControl extends React.Component {
   constructor(props) {
@@ -9,10 +10,34 @@ export default class FormExampleFieldControl extends React.Component {
     this.state = {
       name: props.loggedInUser.name,
       location: props.loggedInUser.location,
+      userId: props.loggedInUser._id,
       bio: "",
       profilePicture: "",
     };
   }
+
+  componentDidMount() {
+    this.createChatUser();
+  }
+
+  createChatUser = () => {
+    const apiKey = "8f2309ad0942c1bb7c03d2e6005b973031289c85";
+    const uid = this.state.userId;
+    const name = this.state.name;
+
+    const user = new CometChat.User(uid);
+
+    user.setName(name);
+
+    CometChat.createUser(user, apiKey).then(
+      (user) => {
+        console.log("user created", user);
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
+  };
 
   uploadImage = async (image) => {
     const files = image.target.files;

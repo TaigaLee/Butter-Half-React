@@ -1,15 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.scss";
+import "./index.css";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
 import * as serviceWorker from "./serviceWorker";
+import { BrowserRouter } from "react-router-dom";
 import { CometChat } from "@cometchat-pro/chat";
 import { COMETCHAT_CONSTANTS } from "./consts";
 
-var appID = COMETCHAT_CONSTANTS.APP_ID;
-var region = COMETCHAT_CONSTANTS.REGION;
-var appSetting = new CometChat.AppSettingsBuilder()
+const appID = COMETCHAT_CONSTANTS.APP_ID;
+const region = COMETCHAT_CONSTANTS.REGION;
+
+const appSetting = new CometChat.AppSettingsBuilder()
   .subscribePresenceForAllUsers()
   .setRegion(region)
   .build();
