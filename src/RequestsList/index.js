@@ -9,7 +9,9 @@ export default function RequestsList(props) {
         style={{ width: "250px", fontFamily: "Righteous" }}
       >
         <Card.Content textAlign={"center"}>
-          <Card.Header>{request.restaurantName}</Card.Header>
+          <Card.Header>
+            {request.restaurantName} ({request.user.location})
+          </Card.Header>
           <Card.Meta style={{ marginBottom: "5px" }}>
             Posted by: {request.user.name}
           </Card.Meta>
@@ -31,21 +33,26 @@ export default function RequestsList(props) {
           )}
 
           <Button
-            color="yellow"
+            color="green"
             style={{
               marginTop: "10px",
-              backgroundColor: "gold",
               color: "white",
+              fontFamily: "Advent Pro",
+              fontSize: "1.1rem",
             }}
             onClick={() => props.getRequestToView(request._id)}
           >
             View{" "}
           </Button>
 
-          {request.user.email === props.loggedInUser.email && (
+          {request.user.email == props.loggedInUser.email && (
             <div style={{ marginTop: "10px" }}>
               <h4> Admin Controls </h4>
-              <Button onClick={() => props.deleteRequest(request._id)}>
+              <Button
+                color="red"
+                onClick={() => props.deleteRequest(request._id)}
+                style={{ fontFamily: "Advent Pro", fontSize: "1.1rem" }}
+              >
                 {" "}
                 Delete{" "}
               </Button>

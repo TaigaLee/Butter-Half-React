@@ -14,6 +14,7 @@ export default class HomePage extends React.Component {
       age: "",
       bio: "",
       action: "Login",
+      chatUsername: "",
     };
   }
 

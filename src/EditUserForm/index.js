@@ -31,8 +31,6 @@ export default class SetUpForm extends React.Component {
 
     const file = await response.json();
 
-    console.log(file.secure_url);
-
     this.setState({
       profilePicture: file.secure_url,
     });

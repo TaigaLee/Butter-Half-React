@@ -34,7 +34,7 @@ class Dashboard extends React.Component {
 
   loginChatUser = () => {
     const apiKey = "8f2309ad0942c1bb7c03d2e6005b973031289c85";
-    const uid = this.state.loggedInUser._id;
+    const uid = this.state.loggedInUser.chatUsername;
 
     CometChat.login(uid, apiKey).then(
       (user) => {
@@ -213,7 +213,6 @@ class Dashboard extends React.Component {
       });
 
       const updateRequestJson = await updateRequestResponse.json();
-      console.log(updateRequestJson);
 
       if (updateRequestJson.status === 200) {
         const requests = this.state.requests;
@@ -271,8 +270,6 @@ class Dashboard extends React.Component {
       this.setState({
         viewingChat: true,
       });
-      console.log(this.state.viewingChat);
-      console.log("Clicked");
     } else {
       this.setState({
         viewingChat: false,
@@ -345,20 +342,32 @@ class Dashboard extends React.Component {
                         backgroundColor: "gold",
                         zIndex: "10",
                         marginLeft: "60px",
+                        fontFamily: "Advent Pro",
+                        fontSize: "1.2rem",
                       }}
                     >
                       Create Request{" "}
                     </Button>
                     <Button
                       color="green"
-                      style={{ marginLeft: "60px", zIndex: "11" }}
+                      style={{
+                        marginLeft: "60px",
+                        zIndex: "11",
+                        fontFamily: "Advent Pro",
+                        fontSize: "1.2rem",
+                      }}
                       onClick={() => this.setState({ viewingChat: true })}
                     >
                       Chat
                     </Button>
                     <Button
                       color="red"
-                      style={{ marginLeft: "60px", zIndex: "11" }}
+                      style={{
+                        marginLeft: "60px",
+                        zIndex: "11",
+                        fontFamily: "Advent Pro",
+                        fontSize: "1.2rem",
+                      }}
                       onClick={this.props.logout}
                     >
                       Logout
@@ -384,6 +393,8 @@ class Dashboard extends React.Component {
                     color: "white",
                     fontFamily: "Advent Pro",
                     fontSize: "2.5rem",
+                    marginBottom: "30px",
+                    textDecoration: "underline",
                   }}
                 >
                   Current Requests
@@ -403,9 +414,10 @@ class Dashboard extends React.Component {
                     color: "white",
                     fontFamily: "Advent Pro",
                     fontSize: "2.5rem",
+                    marginBottom: "20px",
                   }}
                 >
-                  Requests Near You
+                  Current Requests
                 </h1>
                 <h2> Nothing here </h2>
               </div>

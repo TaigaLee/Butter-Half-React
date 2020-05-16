@@ -101,11 +101,11 @@ export default function LoginRegisterForm(props) {
                 variant="outlined"
                 required
                 fullWidth
-                id="age"
-                label="Age"
+                id="chatUsername"
+                label="Choose chat username"
                 onChange={props.handleChange}
-                name="age"
-                autoComplete="age"
+                name="chatUsername"
+                autoComplete="chatUsername"
               />
             </Grid>
           </Grid>

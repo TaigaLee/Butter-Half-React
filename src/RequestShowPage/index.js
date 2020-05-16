@@ -61,7 +61,12 @@ export default class RequestShowPage extends Component {
     return (
       <div className="App">
         <Container
-          style={{ marginTop: "30px", marginBottom: "30px", width: "50%" }}
+          style={{
+            marginTop: "30px",
+            marginBottom: "30px",
+            width: "50%",
+            height: "100%",
+          }}
         >
           <Message>
             <div
@@ -72,7 +77,15 @@ export default class RequestShowPage extends Component {
                 paddingTop: "30px",
               }}
             >
-              <Grid textAlign="center">
+              <Grid
+                textAlign="center"
+                style={{
+                  backgroundColor: "gold",
+                  width: "100%",
+                  height: "100%",
+                  padding: "10px 5px",
+                }}
+              >
                 <div>
                   <Header
                     size="huge"
@@ -89,13 +102,20 @@ export default class RequestShowPage extends Component {
                       marginTop: "10px",
                     }}
                   >
-                    {this.state.requestToView.restaurantName} <br />
-                    Address: {this.state.requestToView.restaurantAddress} (
-                    {this.state.requestToView.restaurantCity}) <br /> <br />
-                    Type of request: {this.state.requestToView.typeOfDate}{" "}
-                    <br />
-                    <br />
-                    Extra info: {this.state.requestToView.extraInfo}
+                    <p style={{ fontSize: "20px" }}>
+                      {" "}
+                      Name: {
+                        this.state.requestToView.restaurantName
+                      } Address: {this.state.requestToView.restaurantAddress} (
+                      {this.state.requestToView.restaurantCity})
+                    </p>
+                    <p style={{ fontSize: "15px" }}>
+                      {" "}
+                      Type of request: {this.state.requestToView.typeOfDate}
+                    </p>
+                    <p style={{ fontSize: "15px" }}>
+                      Extra info: {this.state.requestToView.extraInfo}{" "}
+                    </p>
                   </div>
                 </div>
               </Grid>
@@ -124,7 +144,7 @@ export default class RequestShowPage extends Component {
             <Grid.Column>
               <img
                 src={this.props.requestToView.user.profilePicture}
-                style={{ height: "180px", borderRadius: "80px" }}
+                style={{ height: "160px", borderRadius: "80px" }}
                 alt="profile-pic"
               />
               <div style={{ marginTop: "15px" }}>
@@ -159,11 +179,11 @@ export default class RequestShowPage extends Component {
                   </Button>
                 ) : (
                   <Button
-                    color="yellow"
-                    style={{ marginTop: "50px", marginRight: "20px" }}
+                    color="green"
+                    disabled
+                    style={{ marginTop: "50px", marginLeft: "20px" }}
                   >
-                    {" "}
-                    Message{" "}
+                    Chat username: {this.props.requestToView.user.chatUsername}
                   </Button>
                 )}
                 <Button

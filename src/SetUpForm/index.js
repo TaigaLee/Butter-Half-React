@@ -9,8 +9,8 @@ export default class FormExampleFieldControl extends React.Component {
     super(props);
     this.state = {
       name: props.loggedInUser.name,
-      location: props.loggedInUser.location,
-      userId: props.loggedInUser._id,
+      age: "",
+      chatUsername: props.loggedInUser.chatUsername,
       bio: "",
       profilePicture: "",
     };
@@ -22,7 +22,7 @@ export default class FormExampleFieldControl extends React.Component {
 
   createChatUser = () => {
     const apiKey = "8f2309ad0942c1bb7c03d2e6005b973031289c85";
-    const uid = this.state.userId;
+    const uid = this.state.chatUsername;
     const name = this.state.name;
 
     const user = new CometChat.User(uid);
@@ -110,9 +110,9 @@ export default class FormExampleFieldControl extends React.Component {
             />
             <Form.Input
               fluid
-              label="Zipcode"
-              name="location"
-              value={this.state.location}
+              label="Age"
+              name="age"
+              value={this.state.age}
               onChange={this.handleChange}
             />
           </Form.Group>
