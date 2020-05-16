@@ -108,10 +108,8 @@ export default class RequestShowPage extends Component {
                     }}
                   >
                     <p style={{ fontSize: "20px" }}>
-                      {" "}
-                      Name: {
-                        this.state.requestToView.restaurantName
-                      } Address: {this.state.requestToView.restaurantAddress} (
+                      Name: {this.state.requestToView.restaurantName} Address:
+                      {this.state.requestToView.restaurantAddress} (
                       {this.state.requestToView.restaurantCity})
                     </p>
                     <p style={{ fontSize: "15px" }}>
