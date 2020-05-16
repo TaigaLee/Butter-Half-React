@@ -184,6 +184,7 @@ class Dashboard extends React.Component {
       });
 
       const deleteRequestJson = await deleteRequestResponse.json();
+
       if (deleteRequestJson.status === 200) {
         this.setState({
           requests: this.state.requests.filter(
@@ -385,6 +386,7 @@ class Dashboard extends React.Component {
                 backToDashboard={this.backToDashboard}
                 loggedInUser={this.state.loggedInUser}
                 updateRequest={this.updateRequest}
+                deleteRequest={this.deleteRequest}
               />
             ) : this.state.requests ? (
               <div>

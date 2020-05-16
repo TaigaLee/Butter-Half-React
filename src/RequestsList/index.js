@@ -44,20 +44,6 @@ export default function RequestsList(props) {
           >
             View{" "}
           </Button>
-
-          {request.user.email == props.loggedInUser.email && (
-            <div style={{ marginTop: "10px" }}>
-              <h4> Admin Controls </h4>
-              <Button
-                color="red"
-                onClick={() => props.deleteRequest(request._id)}
-                style={{ fontFamily: "Advent Pro", fontSize: "1.1rem" }}
-              >
-                {" "}
-                Delete{" "}
-              </Button>
-            </div>
-          )}
         </Card.Content>
       </Card>
     );

@@ -57,6 +57,11 @@ export default class RequestShowPage extends Component {
     });
   };
 
+  handleDelete = () => {
+    this.props.deleteRequest(this.props.requestToView._id);
+    this.props.backToDashboard();
+  };
+
   render() {
     return (
       <div className="App">
@@ -131,6 +136,7 @@ export default class RequestShowPage extends Component {
               fontFamily: "Advent Pro",
               color: "white",
               fontSize: "2rem",
+              textDecoration: "underline",
             }}
           >
             {this.props.requestToView.user.name}'s Profile{" "}
@@ -170,13 +176,23 @@ export default class RequestShowPage extends Component {
               <Button.Group>
                 {this.props.requestToView.user.email ===
                 this.state.loggedInUser.email ? (
-                  <Button
-                    color="green"
-                    style={{ marginTop: "50px", marginLeft: "20px" }}
-                    onClick={this.switchEditingRequest}
-                  >
-                    Edit
-                  </Button>
+                  <Button.Group>
+                    <Button
+                      color="green"
+                      style={{ marginTop: "50px", marginLeft: "20px" }}
+                      onClick={this.switchEditingRequest}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      color="red"
+                      onClick={this.handleDelete}
+                      style={{ marginTop: "50px", marginLeft: "20px" }}
+                    >
+                      {" "}
+                      Delete{" "}
+                    </Button>
+                  </Button.Group>
                 ) : (
                   <Button
                     color="green"
@@ -187,7 +203,7 @@ export default class RequestShowPage extends Component {
                   </Button>
                 )}
                 <Button
-                  color="red"
+                  color="yellow"
                   style={{ marginTop: "50px", marginLeft: "20px" }}
                   onClick={this.props.backToDashboard}
                 >
