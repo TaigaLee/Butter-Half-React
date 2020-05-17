@@ -24,5 +24,6 @@ https://wireframepro.mockflow.com/view/Mc820e506732baeeae70ff45b7f051bba15887095
 
 * Requests based on geolocation
 * Message button opening specific chats. 
+* Polishing of dashboard and request show page. 
 
 
