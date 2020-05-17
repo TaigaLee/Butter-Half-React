@@ -28,7 +28,7 @@ export default class RequestsDashboard extends React.Component {
   findRestaurants = async () => {
     try {
       const response = await fetch(
-        `http://opentable.herokuapp.com/api/restaurants?name=` +
+        `https://opentable.herokuapp.com/api/restaurants?name=` +
           this.state.searchTerm
       );
 
