@@ -23,7 +23,7 @@ export default class FormExampleFieldControl extends React.Component {
   createChatUser = () => {
     const apiKey = "8f2309ad0942c1bb7c03d2e6005b973031289c85";
     const uid = this.state.chatUsername;
-    const name = this.state.name;
+    const name = this.state.chatUsername;
 
     const user = new CometChat.User(uid);
 
