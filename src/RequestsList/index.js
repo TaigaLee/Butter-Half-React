@@ -10,7 +10,7 @@ export default function RequestsList(props) {
       >
         <Card.Content textAlign={"center"}>
           <Card.Header>
-            {request.restaurantName} ({request.user.location})
+            {request.restaurantName} ({request.restaurantCity})
           </Card.Header>
           <Card.Meta style={{ marginBottom: "5px" }}>
             Posted by: {request.user.name}
